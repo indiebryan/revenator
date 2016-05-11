@@ -17,8 +17,8 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("Window title");
 		
-		button = new Button("hey");
-		
+		button = new Button("hey!");
+		button.setText("ho!");
 		StackPane layout = new StackPane();
 		layout.getChildren().add(button);
 		
