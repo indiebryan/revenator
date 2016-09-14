@@ -1,13 +1,11 @@
 package com.indieprogrammer.revshare;
+import com.indieprogrammer.revshare.window.WindowMain;
+
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 	
-	Button button;
 	
 	public static void main(String[] args) {
 		launch(args);
@@ -15,16 +13,9 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		primaryStage.setTitle("Window title");
+		primaryStage.setTitle("Revenator :: IndieProgrammer.com/revenator");
+		new WindowMain(primaryStage);
 		
-		button = new Button("hey!");
-		button.setText("ho!");
-		StackPane layout = new StackPane();
-		layout.getChildren().add(button);
-		
-		Scene scene = new Scene(layout, 200, 200);
-		primaryStage.setScene(scene);
-		primaryStage.show();
 	}
 
 }
