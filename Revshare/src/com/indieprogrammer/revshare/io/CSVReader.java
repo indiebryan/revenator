@@ -11,9 +11,11 @@ public class CSVReader {
 	int lineNumber = 0;
 	String[][] content;
 	String reportName;
+	File CSVFile;
 	
 	//Constructor takes a File as an argument passed by a FileChooser
 	public CSVReader(File csv) {
+		this.CSVFile = csv;
 		try {
 			File revenatorWorkingDirectory = new File(System.getProperty("user.home") + "/AppData/Roaming/Revenator");
 			
@@ -27,10 +29,10 @@ public class CSVReader {
 				
 				//File doesn't exist, call PARSEREPORTNAME()
 				this.reportName = parseReportName(csv.getName());
+			} else {
+				//File exists, set report name equal to file name
+				this.reportName = csv.getName();
 			}
-			
-			//File exists, set report name equal to file name
-			this.reportName = csv.getName();
 			
 			//Set LINES equal to a list of each line of text in the csv
 			this.lines = Files.readAllLines(csv.toPath());
@@ -96,11 +98,16 @@ public class CSVReader {
 	//Remember the top line of the CSV file is reserved for tags & user ID's
 	public int findLineForString(String query) {
 		for (int i = 1; i < lines.size(); i++) {
-			if (readPoint(i, 0).trim().equals(query.trim())) {
+			String point = readPoint(i, 0).trim();
+			if (point.substring(6).equals(query.trim().substring(6))) {
 				return i;
 			}
 		}
 		return -666;
+	}
+	
+	public File getCSVFile() {
+		return CSVFile;
 	}
 	
 }

@@ -135,6 +135,8 @@ public class Report {
 				
 				//For each user for each video, add a cut representing the user's share to that video, and add that user's earned revenue to the user's total
 				for (User u : users) {
+					if (reader.findLineForString(v.getName()) == -666)
+						System.out.println("Could not find " + v.getName() + " in the document.");
 					v.addCut(u.getName(), Float.parseFloat(reader.readPoint(reader.findLineForString(v.getName()), j)));
 					users.get(j - 1).addRevenue(Float.parseFloat(reader.readPoint(reader.findLineForString(v.getName()), j)) / 100 * v.getRevenue());
 					j++;
@@ -157,5 +159,10 @@ public class Report {
 	
 	public ArrayList<User> getUsers() {
 		return users;
+	}
+	
+	public File getReportFile() {
+		System.out.println("Returning file " + reader.getCSVFile().getAbsolutePath());
+		return reader.getCSVFile();
 	}
 }
