@@ -1,44 +1,48 @@
 package com.indieprogrammer.revshare.window;
 
 import java.io.File;
-import java.io.FileWriter;
+import java.io.IOException;
 
 import com.indieprogrammer.revshare.Channel;
 
+import javafx.application.Application;
 import javafx.beans.binding.BooleanBinding;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class WindowChannelCreate {
 
 	public static Channel display() {
-
 		//Window init
 		Stage window = new Stage();
 		window.setTitle("Create Channel");
 		window.initModality(Modality.APPLICATION_MODAL);
 
 		BorderPane layout = new BorderPane();
-		Scene scene = new Scene(layout, 500, 150);
-
+		Scene scene = new Scene(layout, 250, 90);
+		//scene.getStylesheets().add("revstyle.css");
+		
 		//Variable to be returned
 		Channel channel = new Channel();
 
 		//Button HBox holds Continue / Cancel buttons
-		HBox hbButtons = new HBox();
+		HBox hbButtons = new HBox(5);
 
 		//Buttons
 		Button buttonCancel = new Button("Cancel");
 		Button buttonFinish = new Button("Finish");
 
 		//Name HBox holds label and textfield
-		HBox hbName = new HBox();
+		HBox hbName = new HBox(5);
 
 		//Channel name label
 		Label labelName = new Label("Name:");
@@ -92,9 +96,13 @@ public class WindowChannelCreate {
 		});
 
 		//Add HBoxes to layout
-		layout.setCenter(hbName);
-		layout.setBottom(hbButtons);
-
+		VBox vb = new VBox();
+		hbName.setAlignment(Pos.CENTER);
+		hbButtons.setAlignment(Pos.CENTER);
+		hbButtons.setPadding(new Insets(10, 10, 10, 10));
+		vb.getChildren().addAll(hbName, hbButtons);
+		vb.setAlignment(Pos.CENTER);
+		layout.setCenter(vb);
 		window.setScene(scene);
 		window.showAndWait();
 

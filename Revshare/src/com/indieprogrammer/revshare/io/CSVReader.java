@@ -16,26 +16,13 @@ public class CSVReader {
 	//Constructor takes a File as an argument passed by a FileChooser
 	public CSVReader(File csv) {
 		this.CSVFile = csv;
-		try {
-			File revenatorWorkingDirectory = new File(System.getProperty("user.home") + "/AppData/Roaming/Revenator");
-			
-			//Make AppData/Roaming/Revenator directory to store csv files locally
-			revenatorWorkingDirectory.mkdir();
-			
-			//When importing a CSV file, check if it has already been copied to directory.  If not, copy it there.
-			File checkIfExists = new File(System.getProperty("user.home") + "/AppData/Roaming/Revenator/" + csv.getName());
-			if (!checkIfExists.exists()) {
-				Files.copy(csv.toPath(), (new File(System.getProperty("user.home") + "/AppData/Roaming/Revenator/" + csv.getName()).toPath()));
-				
-				//File doesn't exist, call PARSEREPORTNAME()
-				this.reportName = parseReportName(csv.getName());
-			} else {
-				//File exists, set report name equal to file name
-				this.reportName = csv.getName();
-			}
 			
 			//Set LINES equal to a list of each line of text in the csv
-			this.lines = Files.readAllLines(csv.toPath());
+			try {
+				this.lines = Files.readAllLines(csv.toPath());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			
 			//Initialize CONTENT array by providing size data of LINES list
 			content = new String[lines.size()][lines.get(0).split(",").length];
@@ -46,9 +33,6 @@ public class CSVReader {
 				content[i] = lines.get(i).split(",");
 			}
 			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	//Parse a readable report name from the original file name

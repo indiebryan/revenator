@@ -13,6 +13,7 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		//Application.setUserAgentStylesheet("revstyle.css");
 		primaryStage.setTitle("Revenator :: IndieProgrammer.com/revenator");
 		new WindowMain(primaryStage);
 		

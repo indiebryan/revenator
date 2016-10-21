@@ -56,14 +56,14 @@ public class WindowCustomVideoName {
 
 
 		BorderPane layout = new BorderPane();
-		Scene scene = new Scene(layout, 400, 250);
+		Scene scene = new Scene(layout, 400, 90);
 
 		HBox hB = new HBox();
 		hB.getChildren().addAll(addButton, minusButton, doneButton);
 		hB.setSpacing(10);
 
 		layout.setTop(labelVideoName);
-		layout.setCenter(hB);
+		layout.setBottom(hB);
 
 		window.setScene(scene);
 		window.showAndWait();

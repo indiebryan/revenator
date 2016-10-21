@@ -51,14 +51,13 @@ public class WindowMain {
 		this.window = window;
 		this.layout = new BorderPane();
 		this.scene = new Scene(layout, 500, 500);
+		//this.scene.getStylesheets().add(getClass().getClassLoader().getResource("revstyle.css").toString());
 
 		//Setup top menu bar
 		setupMenus();
-
 		this.layout.setTop(menuBar);
 		window.setScene(scene);
 		window.show();
-
 	}
 
 	//Load a CSV file and display report on the window
@@ -75,7 +74,7 @@ public class WindowMain {
 		CSVReader csvr = new CSVReader(fc.showOpenDialog(window));
 
 		//Create a new report and pass the CSVReader as an argument
-		Report report = new Report(csvr);
+		Report report = new Report(csvr, this.channel);
 
 		//Create a new bar graph and pass the Report as an argument
 		BarGraph bar = new BarGraph(report);
