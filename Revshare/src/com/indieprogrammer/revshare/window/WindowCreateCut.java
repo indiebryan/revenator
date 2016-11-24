@@ -11,6 +11,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import com.indieprogrammer.revshare.User;
+import com.indieprogrammer.revshare.std.InputStandards;
 
 public class WindowCreateCut {
 	
@@ -22,8 +23,11 @@ public class WindowCreateCut {
 		ArrayList<TextField> textFields = new ArrayList<TextField>();
 		int i = 0;
 		for (User u: users) {
+			TextField field = new TextField();
+			field.setMaxWidth(30);
+			field = InputStandards.newTextField("Enter percentage");
 			nameLabels.add(new Label(u.getName()));
-			textFields.add(new TextField());
+			textFields.add(field);
 			vb.getChildren().addAll(nameLabels.get(i), textFields.get(i));
 			i++;
 		}

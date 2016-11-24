@@ -33,6 +33,9 @@ public class CSVReader {
 				content[i] = lines.get(i).split(",");
 			}
 			
+			//Set reportName
+			this.reportName = parseReportName(csv.toString());
+			
 	}
 	
 	//Parse a readable report name from the original file name

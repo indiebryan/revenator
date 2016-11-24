@@ -70,35 +70,47 @@ public class WindowMain {
 		configureFileChooser(fc);
 		fc.setTitle("Import CSV");
 
-		//Create a CSVReader with the chosen file
-		CSVReader csvr = new CSVReader(fc.showOpenDialog(window));
+		//Store File chosen in variable
+		File chosenFile = fc.showOpenDialog(window);
+		
+		//Check for the user hitting 'Cancel' and not choosing a file
+		if (chosenFile == null) {
+			System.out.println("WindowMain - loadReport(): The returned file from the FileChooser was null");
+		} else {
+			//Create a CSVReader with the chosen file
+			CSVReader csvr = new CSVReader(chosenFile);
 
-		//Create a new report and pass the CSVReader as an argument
-		Report report = new Report(csvr, this.channel);
+			//Create a new report and pass the CSVReader as an argument
+			Report report = new Report(csvr, this.channel);
 
-		//Create a new bar graph and pass the Report as an argument
-		BarGraph bar = new BarGraph(report);
+			//Create a new bar graph and pass the Report as an argument
+			BarGraph bar = new BarGraph(report);
 
-		//Create a new vertical box holder to display revenue data on the right side of the window
-		VBox vb = new VBox();
+			//Create a new vertical box holder to display revenue data on the right side of the window
+			VBox vb = new VBox();
 
-		//Display total earned revenue amongst all videos and add it to the VBox
-		Label lblRevenue = new Label("Total Revenue: $" + String.valueOf(report.getTotalRevenue()));
-		vb.getChildren().add(lblRevenue);
+			//Display total earned revenue amongst all videos and add it to the VBox
+			Label lblRevenue = new Label("Total Revenue: $" + String.valueOf(report.getTotalRevenue()));
+			vb.getChildren().add(lblRevenue);
 
-		//For each User in the report, create a separate label with their own revenue earnings and add it to the VBox
-		for (User u : report.getUsers()) {
-			Label userLabel = new Label(u.getName() + ":  $" + u.getRevenue());
-			vb.getChildren().add(userLabel);
+			//For each User in the report, create a separate label with their own revenue earnings and add it to the VBox
+			for (User u : report.getUsers()) {
+				Label userLabel = new Label(u.getName() + ":  $" + u.getRevenue());
+				vb.getChildren().add(userLabel);
+			}
+
+			//Set VBox spacing and add it to the layout
+			vb.setSpacing(10);
+			this.layout.setRight(vb);
+
+			//Set the bar graph at the center of the layout
+			this.layout.setCenter(bar.getGraph());
+			return report;
 		}
-
-		//Set VBox spacing and add it to the layout
-		vb.setSpacing(10);
-		this.layout.setRight(vb);
-
-		//Set the bar graph at the center of the layout
-		this.layout.setCenter(bar.getGraph());
-		return report;
+		
+		//This line is only reached if the user cancels the file selection process
+		return null;
+		
 	}
 
 	//Open Channel or Report file
@@ -192,7 +204,11 @@ public class WindowMain {
 		menuChannelAddItems = new MenuItem[2];
 		menuChannelAddItems[0] = new MenuItem("Report..");
 		menuChannelAddItems[0].setOnAction(e -> {
-			this.channel.addReport(loadReport());
+			Report r = loadReport();
+			if (r != null) {
+				this.channel.addReport(r);
+				System.out.println("Gave " + r.getName());
+			}
 			//this.channel = WindowChannelCreate.display();
 			//window.setTitle(this.channel.getName() + " - Revenator");
 		});

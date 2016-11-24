@@ -38,10 +38,15 @@ public class Channel {
 		this.reports = reports;
 	}
 
+	/*
+	 * BUG: For some reason, the Files.copy line is returning a NoSuchFileException
+	 */
 	public void addReport(Report report) {
 		this.reports.add(report);
 		try {
-		Files.copy(report.getReportFile().toPath(), (new File(channelFile.toString() + "/" + report.getName()).toPath()));
+			File createChannelDirectory = new File(channelFile.toString());
+			createChannelDirectory.mkdir();
+			Files.copy(report.getReportFile().toPath(), (new File(channelFile.toString() + "/" + report.getName()).toPath()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

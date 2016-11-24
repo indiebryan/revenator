@@ -18,8 +18,10 @@ import javafx.stage.Stage;
 
 public class WindowUserEditor {
 	
+	//Creates a window allowing the user to add/remove users from a selected channel
+	
+	//Returns an ArrayList of User objects upon instantiation
 	public static ArrayList<User> display(String videoTitle) {
-		//ArrayList<String> userNames = new ArrayList<String>();
 		ArrayList<User> users = new ArrayList<User>();
 		
 		Stage window = new Stage();
